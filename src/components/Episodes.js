@@ -1,24 +1,21 @@
 import React from 'react';
 import parse from 'html-react-parser';
+import { Route, Link } from 'react-router-dom';
+import Episode from './episode';
 
 export default function Episodes(props) {
   return (
-    <div className="episodes">
+    <div className="titles">
       {props.episodes.map(e => (
-        <div className="episode" key={e.id} data-testid='ep'>
-          {e.image && (
-            <img className="episode-image" src={e.image.medium} alt={e.name} />
-          )}
-          <div className="episode-info">
-            <p className="episode-number">
-              Season {e.season}, Episode {e.number}
-            </p>
-            <h3>{e.name}</h3>
-            {e.summary && parse(e.summary)}
-            <div className="flex-spacer" />
-            <p className="episode-runtime">{e.runtime} minutes</p>
-          </div>
-        </div>
+      <>
+        <Link to={`/episodes/${e.id}`}>
+          <h2>{e.name}</h2>
+        </Link>
+
+        <Route path={`/episodes/${e.id}`}>
+          <Episode content={e} />
+        </Route>
+      </>
       ))}
     </div>
   );
